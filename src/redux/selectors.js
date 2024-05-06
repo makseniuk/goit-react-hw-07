@@ -5,7 +5,13 @@ export const selectLoading = state => state.contacts.loading;
 export const selectError = state => state.contacts.error;
 export const selectNameFilter = state => state.filters.name;
 
-export const selectFilteredContacts = createSelector([selectContacts, selectNameFilter],
-    (contacts, filters) => {
-        return contacts.filter(
-    (contact) => contact.name.toLowerCase().includes(filters .toLowerCase()))} )
+export const selectFilteredContacts = createSelector(
+  [selectContacts, selectNameFilter],
+  (contacts, filters) => {
+    if (!filters) return contacts; // Перевірка, чи filters не є undefined
+    const filterLowerCase = filters.toLowerCase();
+    return contacts.filter(
+      (contact) => contact.name.toLowerCase().includes(filterLowerCase)
+    );
+  }
+);
